@@ -2,6 +2,7 @@
 #include <cstring>
 #include <windows.h>
 #include <chrono>
+#include <limits.h>
 using namespace std;
 
 //CONSTANTS
@@ -10,9 +11,9 @@ const int   MIN_INT = -100,
             LENGTH = 200;
 
 //SEARCHING
-int BetterLinearSearch(int[], int, int, int);
-int SentinelLinearSearch(int[], int, int, int);
-int OrderedArraySearch(int[], int, int, int);
+int BetterLinearSearch(int[], int, int);
+int SentinelLinearSearch(int[], int, int);
+int OrderedArraySearch(int[], int, int);
 int BinarySearch(int[], int, int, int);
 
 //VARIABLES
@@ -37,11 +38,64 @@ void PrintError(int);
 //FILES
 
 int main(){
-    int Array[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    cout << BinarySearch(Array, 2, 0, 9);
+    // int Array[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    // int Array2[10] = {172, 123, 8, 12, 0, 122, 81, 20, 22, 10};
+    // int len = 10;
+    // cout << BetterLinearSearch(Array, len, 2) << endl;
+    // cout << SentinelLinearSearch(Array, len, 2) << endl;
+    // cout << OrderedArraySearch(Array, len, 2) << endl;
+    // cout << BinarySearch(Array, 2, 0, 9) << endl;
+
+    // cout << BetterLinearSearch(Array, len, 11) << endl;
+    // cout << SentinelLinearSearch(Array, len, 11) << endl;
+    // cout << OrderedArraySearch(Array, len, 11) << endl;
+    // cout << BinarySearch(Array, 11, 0, 9) << endl;
+
+
+    // cout << BetterLinearSearch(Array2, len, 22) << endl;
+    // cout << SentinelLinearSearch(Array2, len, 22) << endl;
+
+    
+    // cout << BetterLinearSearch(Array2, len, 222) << endl;
+    // cout << SentinelLinearSearch(Array2, len, 222) << endl;
 }
 
 //searching
+int BetterLinearSearch(int Array[], int len, int target){
+    for (int i = 0; i < len; i++){
+        if (Array[i] == target){
+            return i;
+        }
+    }
+    return -1;
+}
+
+int SentinelLinearSearch(int Array[], int len, int target){
+    int lastInd = len - 1, last = Array[lastInd], i = 0;
+    Array[lastInd] = target;
+    while (Array[i] != target){
+        i++;
+    }
+    Array[lastInd] = last;
+    if (i < lastInd || Array[lastInd] == target){
+        return i;
+    }
+    return -1;
+}
+
+int OrderedArraySearch(int Array[], int len, int target){
+    int lastInd = len - 1, last = Array[lastInd], i = 0;
+    Array[lastInd] = INT32_MAX;
+    while (target > Array[i]){
+        i++;
+    }
+    Array[lastInd] = last;
+    if(Array[i] == target){
+        return i;
+    }
+    return -1;
+}
+
 int BinarySearch(int Array[], int target, int left, int right){
     int answer = -1;
     while(left < right){
