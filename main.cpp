@@ -38,46 +38,63 @@ void PrintError(int);
 const char* Files[] = {"output/BLS.txt", "output/SLS.txt", "output/OAS.txt", "output/BS.txt"};
 
 int main(){
-    ClearAllFiles(FILES_QUANTITY);
+    ClearAllFiles(FILES_QUANTITY); //открыли и очистили все файлы
 
-    int target = MAX_INT + 1;
-    for(int len = 10000; len <= 200000; len = len + 19000){
-        RandomSequenceInt(Array, len);
-        for(int j = 0; j < 4; j++){
+    for(int len = 10000; len <= 200000; len = len + 19000){ //цикл по размерностям массива [10^4, ..., 2*10^5]
+        RandomSequenceInt(Array, len); //генерируем рандом - массив для BLS, SLS
+
+        for(int j = 0; j < 4; j++){ //цикл по всем функция сортировки
+            int target = MAX_INT + 1; //искомое значение для BLS, SLS
             if (j == 2){
-                AscendingSequenceInt(Array, len);
+                AscendingSequenceInt(Array, len); //генерируем неубывающий массив для OAS, BS
             }
-            FILE* file = fopen(Files[j], "a+");
+            FILE* file = fopen(Files[j], "a+"); //открываем нужный файл в режиме записи, сохраняя предыдущие записи
             int temp = target;
-            
-            int comparations = -1;
-            swap(Array[0], temp);
-            auto begin = steady_clock::now();
-            int res = Funcs[j](Array, len, target, comparations);
-            auto end = steady_clock::now();
-            swap(Array[0], temp);
-            auto duration = duration_cast<microseconds>(end - begin);
-            PrintResFile(res, len, duration.count(), 0, file);
-            
-            comparations = -1;
-            swap(Array[len/2], temp);
-            begin = steady_clock::now();
-            res = Funcs[j](Array, len, target, comparations);
-            end = steady_clock::now();
-            swap(Array[len/2], temp);
-            duration = duration_cast<microseconds>(end - begin);
-            PrintResFile(res, len, duration.count(), 0, file);
+            if (j > 1){ 
+                temp = Array[0]; //для SLS, BS целевое значение MAX_INT + 1 не подходит (из-за условия упорядоченности массива)
+                target = Array[0]; //поэтому в разных случаях искомый элемент будет из [Arr[0], Arr[len/2], Arr[len-1]](первый, средний и последний)
+            }
 
-            comparations = -1;
+            int comparations = 0; //счетчик сравнений
+            swap(Array[0], temp); //для каждой функции устанавливает выбранное заранее искомое значение из target в нужное(!) место в массиве
+            auto begin = steady_clock::now(); //начало отсчета времени
+            int res = Funcs[j](Array, len, target, comparations); //поиск элемента в массиве(вызов функции из массива)
+            auto end = steady_clock::now(); //конец отсчета времени
+            swap(Array[0], temp); //возвращаем массив в исходное состояние (искомый элемент удален)
+            auto duration = duration_cast<microseconds>(end - begin); //вычисление длительности
+            PrintResFile(res, len, duration.count(), comparations, file); //печать результата, длины массива, времени, числа сравнений в файл
+            //для OAS, BS в файлах значения comparation по умолчанию 0
+
+            //устанавливаем искомый элемент для OAS, BS
+            if (j > 1){
+                temp = Array[len/2];
+                target = Array[len/2];
+            }
+
+            //далее все по аналогии с первым вызовом
+            //всего вызова 3, по одному для каждого положения искомого элемента в массиве 
+            comparations = 0; 
+            swap(Array[len/2], temp);
+            begin = steady_clock::now();
+            res = Funcs[j](Array, len, target, comparations);
+            end = steady_clock::now();
+            swap(Array[len/2], temp);
+            duration = duration_cast<microseconds>(end - begin);
+            PrintResFile(res, len, duration.count(), comparations, file);
+
+            if (j > 1){
+                temp = Array[len-1];
+                target = Array[len-1];
+            }
+            comparations = 0;
             swap(Array[len-1], temp);
             begin = steady_clock::now();
             res = Funcs[j](Array, len, target, comparations);
             end = steady_clock::now();
             swap(Array[len-1], temp);
             duration = duration_cast<microseconds>(end - begin);
-            PrintResFile(res, len, duration.count(), 0, file);
+            PrintResFile(res, len, duration.count(), comparations, file);
             fprintf(file, "\n");
-
 
             fclose(file);
         }
@@ -125,7 +142,7 @@ int OrderedArraySearch(int Array[], int len, int target, int &comparations){
     return -1;
 }
 
-int BinarySearch(int Array[], int target, int len, int &comparations){
+int BinarySearch(int Array[], int len, int target, int &comparations){
     int answer = -1, left = 0, right = len - 1;
     while(left < right){
         int m = (left + right) / 2;
@@ -137,7 +154,8 @@ int BinarySearch(int Array[], int target, int len, int &comparations){
     }
     if (Array[left] == target){
         answer = left;
-    } 
+    }
+    printf("Array[left] = %d, target = %d\n", Array[left], target);
     return answer;
 }
 
