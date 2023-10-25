@@ -110,6 +110,7 @@ int BetterLinearSearch(int Array[], int len, int target, int &comparations){
             return i;
         }
     }
+    comparations++; //последнее сравнение в цикле
     return -1;
 }
 
@@ -155,7 +156,6 @@ int BinarySearch(int Array[], int len, int target, int &comparations){
     if (Array[left] == target){
         answer = left;
     }
-    printf("Array[left] = %d, target = %d\n", Array[left], target);
     return answer;
 }
 
