@@ -31,13 +31,17 @@ void ClearAllFiles(int);
 void PrintResFile(int, int, int64_t, int, FILE*);
 
 //ERROR HANDLERS
-int ErrorHandler(int, int, double, double, int, int);
+int ErrorHandler(int, int, int);
 void PrintError(int);
 
 //FILES
 const char* Files[] = {"output/BLS.txt", "output/SLS.txt", "output/OAS.txt", "output/BS.txt"};
 
 int main(){
+    int err = ErrorHandler(MIN_INT, MAX_INT, LENGTH);
+    if (err != 0){
+        PrintError(err); //обработка ошибок
+    } 
     ClearAllFiles(FILES_QUANTITY); //открыли и очистили все файлы
 
     for(int len = 10000; len <= 200000; len = len + 19000){ //цикл по размерностям массива [10^4, ..., 2*10^5]
@@ -62,25 +66,25 @@ int main(){
             auto end = steady_clock::now(); //конец отсчета времени
             swap(Array[0], temp); //возвращаем массив в исходное состояние (искомый элемент удален)
             auto duration = duration_cast<microseconds>(end - begin); //вычисление длительности
-            // PrintResFile(res, len, duration.count(), comparations, file); //печать результата, длины массива, времени, числа сравнений в файл
+            PrintResFile(res, len, duration.count(), comparations, file); //печать результата, длины массива, времени, числа сравнений в файл
             // //для OAS, BS в файлах значения comparation по умолчанию 0
 
             //устанавливаем искомый элемент для OAS, BS
-            // if (j > 1){
-            //     temp = Array[len/2];
-            //     target = Array[len/2];
-            // }
+            if (j > 1){
+                temp = Array[len/2];
+                target = Array[len/2];
+            }
 
-            // //далее все по аналогии с первым вызовом
-            // //всего вызова 3, по одному для каждого положения искомого элемента в массиве 
-            // comparations = 0; 
-            // swap(Array[len/2], temp);
-            // begin = steady_clock::now();
-            // res = Funcs[j](Array, len, target, comparations);
-            // end = steady_clock::now();
-            // swap(Array[len/2], temp);
-            // duration = duration_cast<microseconds>(end - begin);
-            // PrintResFile(res, len, duration.count(), comparations, file);
+            //далее все по аналогии с первым вызовом
+            //всего вызова 3, по одному для каждого положения искомого элемента в массиве 
+            comparations = 0; 
+            swap(Array[len/2], temp);
+            begin = steady_clock::now();
+            res = Funcs[j](Array, len, target, comparations);
+            end = steady_clock::now();
+            swap(Array[len/2], temp);
+            duration = duration_cast<microseconds>(end - begin);
+            PrintResFile(res, len, duration.count(), comparations, file);
 
             if (j > 1){
                 temp = Array[len-1];
@@ -94,7 +98,7 @@ int main(){
             swap(Array[len-1], temp);
             duration = duration_cast<microseconds>(end - begin);
             PrintResFile(res, len, duration.count(), comparations, file);
-            // fprintf(file, "\n");
+            fprintf(file, "\n");
 
             fclose(file);
         }
@@ -159,15 +163,15 @@ int BinarySearch(int Array[], int len, int target, int &comparations){
     return answer;
 }
 
+//print result to file
+void PrintResFile(int res, int len, int64_t time, int comparations, FILE *file){
+    fprintf(file, "%d %d %d %d\n", res, len, time, comparations);
+}
+
 //error handler
-int ErrorHandler(int minInt, int maxInt, double minDouble, double maxDouble, int length, int intervalLength){
+int ErrorHandler(int minInt, int maxInt, int length){
     if (maxInt <= minInt) return 1;
-
-
-    if (maxDouble <= minDouble) return 2;
-    if (length < 1) return 3;
-    if (length < intervalLength) return 4;
-    if (intervalLength < 1) return 5;
+    if (length < 1) return 2;
     return 0;
 }
 
@@ -179,24 +183,9 @@ void PrintError(int error){
             printf("MIN_INT must be less then MAX_INT. error code: %d\n", error);
             break;
         case 2:
-            printf("MIN_DOUBLE must be less then MAX_DOUBLE. error code: %d\n", error);
-            break;
-        case 3:
             printf("LENGTH must be greater then 0. error code: %d\n", error);
             break;
-        case 4:
-            printf("INTERVAL_LENGTH must be less then LENGTH. error code: %d\n", error);
-            break;
-        case 5:
-            printf("INTERVAL_LENGTH must be greater then 0. error code: %d\n", error);
-            break;
     }
-}
-
-//print result to file
-void PrintResFile(int res, int len, int64_t time, int comparations, FILE *file){
-    // fprintf(file, "%d %d %d %d\n", res, len, time, comparations);
-    fprintf(file, "%d\n", time);
 }
 
 //clear all files
