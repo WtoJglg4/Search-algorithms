@@ -43,7 +43,7 @@ int main(){
     for(int len = 10000; len <= 200000; len = len + 19000){ //цикл по размерностям массива [10^4, ..., 2*10^5]
         RandomSequenceInt(Array, len); //генерируем рандом - массив для BLS, SLS
 
-        for(int j = 0; j < 4; j++){ //цикл по всем функция сортировки
+        for(int j = 0; j < FILES_QUANTITY; j++){ //цикл по всем функция сортировки
             int target = MAX_INT + 1; //искомое значение для BLS, SLS
             if (j == 2){
                 AscendingSequenceInt(Array, len); //генерируем неубывающий массив для OAS, BS
@@ -62,25 +62,25 @@ int main(){
             auto end = steady_clock::now(); //конец отсчета времени
             swap(Array[0], temp); //возвращаем массив в исходное состояние (искомый элемент удален)
             auto duration = duration_cast<microseconds>(end - begin); //вычисление длительности
-            PrintResFile(res, len, duration.count(), comparations, file); //печать результата, длины массива, времени, числа сравнений в файл
-            //для OAS, BS в файлах значения comparation по умолчанию 0
+            // PrintResFile(res, len, duration.count(), comparations, file); //печать результата, длины массива, времени, числа сравнений в файл
+            // //для OAS, BS в файлах значения comparation по умолчанию 0
 
             //устанавливаем искомый элемент для OAS, BS
-            if (j > 1){
-                temp = Array[len/2];
-                target = Array[len/2];
-            }
+            // if (j > 1){
+            //     temp = Array[len/2];
+            //     target = Array[len/2];
+            // }
 
-            //далее все по аналогии с первым вызовом
-            //всего вызова 3, по одному для каждого положения искомого элемента в массиве 
-            comparations = 0; 
-            swap(Array[len/2], temp);
-            begin = steady_clock::now();
-            res = Funcs[j](Array, len, target, comparations);
-            end = steady_clock::now();
-            swap(Array[len/2], temp);
-            duration = duration_cast<microseconds>(end - begin);
-            PrintResFile(res, len, duration.count(), comparations, file);
+            // //далее все по аналогии с первым вызовом
+            // //всего вызова 3, по одному для каждого положения искомого элемента в массиве 
+            // comparations = 0; 
+            // swap(Array[len/2], temp);
+            // begin = steady_clock::now();
+            // res = Funcs[j](Array, len, target, comparations);
+            // end = steady_clock::now();
+            // swap(Array[len/2], temp);
+            // duration = duration_cast<microseconds>(end - begin);
+            // PrintResFile(res, len, duration.count(), comparations, file);
 
             if (j > 1){
                 temp = Array[len-1];
@@ -94,7 +94,7 @@ int main(){
             swap(Array[len-1], temp);
             duration = duration_cast<microseconds>(end - begin);
             PrintResFile(res, len, duration.count(), comparations, file);
-            fprintf(file, "\n");
+            // fprintf(file, "\n");
 
             fclose(file);
         }
@@ -195,7 +195,8 @@ void PrintError(int error){
 
 //print result to file
 void PrintResFile(int res, int len, int64_t time, int comparations, FILE *file){
-    fprintf(file, "%d %d %d %d\n", res, len, time, comparations);
+    // fprintf(file, "%d %d %d %d\n", res, len, time, comparations);
+    fprintf(file, "%d\n", time);
 }
 
 //clear all files
