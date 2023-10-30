@@ -1,44 +1,44 @@
-0 10000 0 0
-4996 10000 15 0
-9995 10000 24 0
+ResIndex: 0	Len: 10000	Time: 0	Comps: 0
+ResIndex: 4996	Len: 10000	Time: 11	Comps: 0
+ResIndex: 9995	Len: 10000	Time: 23	Comps: 0
 
-0 29000 0 0
-14486 29000 35 0
-28986 29000 58 0
+ResIndex: 0	Len: 29000	Time: 0	Comps: 0
+ResIndex: 14486	Len: 29000	Time: 27	Comps: 0
+ResIndex: 28986	Len: 29000	Time: 69	Comps: 0
 
-0 48000 0 0
-23977 48000 37 0
-47976 48000 73 0
+ResIndex: 0	Len: 48000	Time: 0	Comps: 0
+ResIndex: 23977	Len: 48000	Time: 32	Comps: 0
+ResIndex: 47976	Len: 48000	Time: 55	Comps: 0
 
-0 67000 0 0
-33467 67000 29 0
-66967 67000 61 0
+ResIndex: 0	Len: 67000	Time: 0	Comps: 0
+ResIndex: 33467	Len: 67000	Time: 38	Comps: 0
+ResIndex: 66967	Len: 67000	Time: 78	Comps: 0
 
-0 86000 0 0
-42958 86000 49 0
-85957 86000 97 0
+ResIndex: 0	Len: 86000	Time: 0	Comps: 0
+ResIndex: 42958	Len: 86000	Time: 44	Comps: 0
+ResIndex: 85957	Len: 86000	Time: 79	Comps: 0
 
-0 105000 0 0
-52448 105000 43 0
-104948 105000 87 0
+ResIndex: 0	Len: 105000	Time: 0	Comps: 0
+ResIndex: 52448	Len: 105000	Time: 75	Comps: 0
+ResIndex: 104948	Len: 105000	Time: 138	Comps: 0
 
-0 124000 0 0
-61939 124000 50 0
-123938 124000 106 0
+ResIndex: 0	Len: 124000	Time: 0	Comps: 0
+ResIndex: 61939	Len: 124000	Time: 50	Comps: 0
+ResIndex: 123938	Len: 124000	Time: 100	Comps: 0
 
-0 143000 0 0
-71429 143000 110 0
-142929 143000 209 0
+ResIndex: 0	Len: 143000	Time: 0	Comps: 0
+ResIndex: 71429	Len: 143000	Time: 125	Comps: 0
+ResIndex: 142929	Len: 143000	Time: 180	Comps: 0
 
-0 162000 0 0
-80920 162000 72 0
-161919 162000 141 0
+ResIndex: 0	Len: 162000	Time: 0	Comps: 0
+ResIndex: 80920	Len: 162000	Time: 87	Comps: 0
+ResIndex: 161919	Len: 162000	Time: 158	Comps: 0
 
-0 181000 0 0
-90410 181000 81 0
-180910 181000 174 0
+ResIndex: 0	Len: 181000	Time: 0	Comps: 0
+ResIndex: 90410	Len: 181000	Time: 76	Comps: 0
+ResIndex: 180910	Len: 181000	Time: 162	Comps: 0
 
-0 200000 0 0
-99901 200000 122 0
-199900 200000 401 0
+ResIndex: 0	Len: 200000	Time: 0	Comps: 0
+ResIndex: 99901	Len: 200000	Time: 104	Comps: 0
+ResIndex: 199900	Len: 200000	Time: 175	Comps: 0
 

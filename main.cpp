@@ -9,7 +9,7 @@ using namespace chrono;
 //CONSTANTS
 const int   MIN_INT = -1000,
             MAX_INT = 1000,
-            LENGTH = 200000, 
+            LENGTH = 200000, // не изменяется
             FILES_QUANTITY = 4;
 
 //SEARCHING
@@ -165,7 +165,7 @@ int BinarySearch(int Array[], int len, int target, int &comparations){
 
 //print result to file
 void PrintResFile(int res, int len, int64_t time, int comparations, FILE *file){
-    fprintf(file, "%d %d %d %d\n", res, len, time, comparations);
+    fprintf(file, "ResIndex: %d\tLen: %d\tTime: %d\tComps: %d\n", res, len, time, comparations);
 }
 
 //error handler
