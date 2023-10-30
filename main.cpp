@@ -127,7 +127,7 @@ int SentinelLinearSearch(int Array[], int len, int target, int &comparations){
     }
     comparations += 2; //последнее сравнение, когда в цикл не заходим + сравнение в if далее
 
-    Array[lastInd] = last;
+    Array[lastInd] = last; //восстановили исходный массив
     if (i < lastInd || Array[lastInd] == target){
         return i;
     }
@@ -140,7 +140,7 @@ int OrderedArraySearch(int Array[], int len, int target, int &comparations){
     while (target > Array[i]){
         i++;
     }
-    Array[lastInd] = last;
+    Array[lastInd] = last; //восстановили исходный массив
     if(Array[i] == target){
         return i;
     }
